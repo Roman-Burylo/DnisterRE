@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnisterRE", "DnisterRE\DnisterRE.csproj", "{62D5A116-F77D-43B3-9155-3C787F04AA1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{442C9D28-E9EB-4486-8283-09E80930B983}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62D5A116-F77D-43B3-9155-3C787F04AA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62D5A116-F77D-43B3-9155-3C787F04AA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62D5A116-F77D-43B3-9155-3C787F04AA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62D5A116-F77D-43B3-9155-3C787F04AA1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{442C9D28-E9EB-4486-8283-09E80930B983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{442C9D28-E9EB-4486-8283-09E80930B983}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{442C9D28-E9EB-4486-8283-09E80930B983}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{442C9D28-E9EB-4486-8283-09E80930B983}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1FCACE9-7381-4DF0-B641-CB7781CA5307}
+	EndGlobalSection
+EndGlobal
