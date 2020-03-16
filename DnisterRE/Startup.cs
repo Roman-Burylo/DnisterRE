@@ -29,7 +29,7 @@ namespace DnisterRE
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
+          
             services.AddMvc();
             services.AddDbContext<DnisterDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUnitOfWork, UnitOfWork>(provider =>
