@@ -12,6 +12,8 @@
 
         public string Email { get; set; }
 
-        public string UserRoleId { get; set; }
+        public int RoleId { get; set; }
+
+        public UserRole Role { get; set; }
     }
 }
