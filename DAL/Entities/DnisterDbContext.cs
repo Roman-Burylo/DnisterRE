@@ -1,4 +1,5 @@
 ﻿using DAL.Configuration;
+using DAL.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Entities
@@ -16,11 +17,15 @@ namespace DAL.Entities
 
         public DbSet<Location> Locations { get; set; }
 
+        public DbSet<News> News { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new LocationConfiguration());
+            modelBuilder.ApplyConfiguration(new NewsConfiguration());
+
         }
     }
 }
