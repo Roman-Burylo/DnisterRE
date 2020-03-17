@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DnisterRE.Controllers
 {
     [ApiController]
-    [Route("api/users")]
+    [Route("api/news")]
     public class NewsController : ControllerBase
     {
         private readonly IGenericRepository<News> _newsRepository;
