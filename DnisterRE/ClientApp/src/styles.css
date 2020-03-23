@@ -14,3 +14,19 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.toolbar {
+  flex: 1 1 auto;
+}
+
+.toolbar-button, .toolbar-login-button {
+  font-size: large;
+}
+
+.toolbar-login-button {
+  background-color: #d9d7f2;
+}
+
