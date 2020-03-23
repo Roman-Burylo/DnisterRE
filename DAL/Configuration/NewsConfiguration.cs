@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DAL.Configurations
+namespace DAL.Configuration
 {
     public class NewsConfiguration : IEntityTypeConfiguration<News>
     {
