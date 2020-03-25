@@ -12,7 +12,7 @@ namespace DAL.Entities
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Role> UserRoles { get; set; }
 
         public DbSet<Location> Locations { get; set; }
 

@@ -14,12 +14,12 @@ namespace DnisterRE.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        private readonly IGenericRepository<UserRole> _userRoleRepository;
+        private readonly IGenericRepository<Role> _userRoleRepository;
 
         public UserRoleController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _userRoleRepository = unitOfWork.GetRepository<UserRole>();
+            _userRoleRepository = unitOfWork.GetRepository<Role>();
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace DnisterRE.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             if (id == default)
             {
@@ -49,7 +49,7 @@ namespace DnisterRE.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody]UserRole userRole)
+        public async Task<IActionResult> Create([FromBody]Role userRole)
         {        
             try
             {
@@ -65,7 +65,7 @@ namespace DnisterRE.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateById(int id, [FromBody]UserRole userRole)
+        public async Task<IActionResult> UpdateById(Guid id, [FromBody]Role userRole)
         {
             if (id == default)
             {
@@ -94,7 +94,7 @@ namespace DnisterRE.Controllers
         }
 
         [HttpDelete("remove/{id}")]
-        public async Task<IActionResult> RemoveById(int id)
+        public async Task<IActionResult> RemoveById(Guid id)
         {
             if (id == default)
             {
@@ -103,7 +103,7 @@ namespace DnisterRE.Controllers
 
             try
             {
-                UserRole userRole = await _userRoleRepository.Get(e => e.Id == id);
+                Role userRole = await _userRoleRepository.Get(e => e.Id == id);
                 _userRoleRepository.Remove(userRole);
                 await _unitOfWork.SaveChangesAsync();
                 return Ok();
