@@ -8,19 +8,17 @@ namespace DAL.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("User");
-
-            builder.HasKey(e => e.Id);
+            builder.ToTable("Users");
 
             builder.Property(e => e.Id).ValueGeneratedOnAdd();
 
-            builder.Property(e => e.Name).HasMaxLength(45);
+            builder.Property(e => e.Email).HasMaxLength(256);
 
-            builder.Property(e => e.Password).HasMaxLength(12);
+            builder.HasIndex(x => x.Email).IsUnique();
 
-            builder.Property(e => e.PhoneNumber).HasMaxLength(15);
+            builder.HasOne(d => d.Details).WithOne(u => u.User).HasForeignKey<UserDetails>(x => x.UserDetailsId);
 
-            builder.HasOne(e => e.Role).WithMany(q => q.Users);
+            builder.HasOne(d => d.Confirmation).WithOne(u => u.User).HasForeignKey<UserConfirmation>(x => x.Id);
         }
     }
 }

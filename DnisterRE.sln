@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnisterRE", "DnisterRE\DnisterRE.csproj", "{62D5A116-F77D-43B3-9155-3C787F04AA1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnisterRE", "DnisterRE\DnisterRE.csproj", "{62D5A116-F77D-43B3-9155-3C787F04AA1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{442C9D28-E9EB-4486-8283-09E80930B983}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{442C9D28-E9EB-4486-8283-09E80930B983}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bll", "Blll\Bll.csproj", "{8529A927-7297-4812-A986-BE0CE1A23FEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{442C9D28-E9EB-4486-8283-09E80930B983}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{442C9D28-E9EB-4486-8283-09E80930B983}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{442C9D28-E9EB-4486-8283-09E80930B983}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8529A927-7297-4812-A986-BE0CE1A23FEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8529A927-7297-4812-A986-BE0CE1A23FEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8529A927-7297-4812-A986-BE0CE1A23FEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8529A927-7297-4812-A986-BE0CE1A23FEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

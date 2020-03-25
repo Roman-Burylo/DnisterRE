@@ -30,7 +30,7 @@ namespace DnisterRE.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             if (id == default)
             {
@@ -70,7 +70,7 @@ namespace DnisterRE.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateById(int id, [FromBody]User user)
+        public async Task<IActionResult> UpdateById(Guid id, [FromBody]User user)
         {
             if (id == default)
             {
@@ -85,12 +85,12 @@ namespace DnisterRE.Controllers
                 {
                     throw new NullReferenceException($"Error while updating user. User with {nameof(id)}={id} not found");
                 }
-
-                currentUser.Name = user.Name;
-                currentUser.PhoneNumber = user.Name;                
-                currentUser.Email = user.Email;                
-                currentUser.PhoneNumber = user.PhoneNumber;                
-                currentUser.RoleId = user.RoleId;
+                //mapper
+                //currentUser.Name = user.Name;
+                //currentUser.PhoneNumber = user.Name;                
+                //currentUser.Email = user.Email;                
+                //currentUser.PhoneNumber = user.PhoneNumber;                
+                //currentUser.RoleId = user.RoleId;
 
                 _userRepository.Update(currentUser);
                 await _unitOfWork.SaveChangesAsync();
@@ -105,7 +105,7 @@ namespace DnisterRE.Controllers
         }
 
         [HttpDelete("remove/{id}")]
-        public async Task<IActionResult> RemoveById(int id)
+        public async Task<IActionResult> RemoveById(Guid id)
         {
             if (id == default)
             {
