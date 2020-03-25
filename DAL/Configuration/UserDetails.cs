@@ -9,7 +9,9 @@ namespace DAL.Configuration
         public void Configure(EntityTypeBuilder<UserDetails> builder)
         {
             builder.ToTable("UsersDetails");
+
             builder.Property(e => e.FirstName).HasMaxLength(32);
+
             builder.Property(e => e.LastName).HasMaxLength(32);            
         }
     }
