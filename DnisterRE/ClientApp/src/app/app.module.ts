@@ -1,34 +1,61 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import {
+  MatToolbarModule,
+  MatButtonModule,
+  MatLabel,
+  MatFormField,
+  MatInput
+} from '@angular/material';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { LoginFormComponent } from './login-form/login-form.component'
+import { from } from 'rxjs'
+
+@NgModule({
+  imports: [
+    MatFormField,
+    MatInput,
+    MatLabel,
+  ],
+  exports: [
+    MatFormField,
+    MatInput,
+    MatLabel,
+  ],
+  declarations: [
+    LoginFormComponent,
+  ]
+}) export class MaterialModule { };
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    LoginFormComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    MatToolbarModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    MatBottomSheetModule,
+    // MatFormField,
+    // MatInput,
+    // MatLabel,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  entryComponents: [LoginFormComponent],
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+  ],
 })
 export class AppModule { }
+
