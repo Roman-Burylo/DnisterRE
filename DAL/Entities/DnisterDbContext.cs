@@ -14,6 +14,10 @@ namespace DAL.Entities
 
         public DbSet<Role> UserRoles { get; set; }
 
+        public DbSet<UserConfirmation> UserConfirmations { get; set; }
+
+        public DbSet<UserDetails> UserDetails { get; set; }
+
         public DbSet<Location> Locations { get; set; }
 
         public DbSet<News> News { get; set; }
@@ -21,10 +25,11 @@ namespace DAL.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfirmationConfiguration());
+            modelBuilder.ApplyConfiguration(new UserDetailsConfiguration());
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new LocationConfiguration());
-            modelBuilder.ApplyConfiguration(new NewsConfiguration());
-
+            modelBuilder.ApplyConfiguration(new NewsConfiguration());    
         }
     }
 }
