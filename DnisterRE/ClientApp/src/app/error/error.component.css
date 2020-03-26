@@ -5,8 +5,6 @@ h2{
 div.errorCSS 
 {
         font-size: medium;
-        border: solid salmon;
-        border-width: 5px;
         font-family:  Roboto, "Helvetica Neue", sans-serif;
         margin-top: 3%;
         margin-left: 40%;
@@ -16,4 +14,3 @@ div.errorCSS
         
  }
 
- 
