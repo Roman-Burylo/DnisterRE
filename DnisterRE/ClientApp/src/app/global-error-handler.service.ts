@@ -2,8 +2,6 @@ import { Injectable, ErrorHandler, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
-
-
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
@@ -21,8 +19,6 @@ export class GlobalErrorHandler implements ErrorHandler {
       console.error('An error occured: ', error.message);
       
     }
-    router.navigate(['error']);
-    
+    router.navigate(['error']); 
   }
-  
 }
