@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -15,13 +15,19 @@ import {
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LoginFormComponent } from './login-form/login-form.component'
-import { from } from 'rxjs'
+import { from } from 'rxjs';
+//import { Lol2Component } from './lol2/lol2.component';
+import { ErrorComponent } from './error/error.component'
+import { GlobalErrorHandler } from './global-error-handler.service';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   imports: [
     MatFormField,
     MatInput,
     MatLabel,
+    AppRoutingModule
+    
   ],
   exports: [
     MatFormField,
@@ -30,6 +36,9 @@ import { from } from 'rxjs'
   ],
   declarations: [
     LoginFormComponent,
+    //Lol2Component,
+    ErrorComponent
+    
   ]
 }) export class MaterialModule { };
 
@@ -37,6 +46,7 @@ import { from } from 'rxjs'
   declarations: [
     AppComponent,
     LoginFormComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,11 +56,14 @@ import { from } from 'rxjs'
     MatButtonModule,
     BrowserAnimationsModule,
     MatBottomSheetModule,
+    AppRoutingModule
     // MatFormField,
     // MatInput,
     // MatLabel,
   ],
-  providers: [],
+  providers: [
+    {provide: ErrorHandler, useClass: GlobalErrorHandler}
+  ],
   entryComponents: [LoginFormComponent],
   bootstrap: [AppComponent],
   schemas: [
