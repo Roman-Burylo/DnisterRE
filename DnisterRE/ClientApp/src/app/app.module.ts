@@ -16,10 +16,11 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LoginFormComponent } from './login-form/login-form.component'
 import { from } from 'rxjs';
-//import { Lol2Component } from './lol2/lol2.component';
+
 import { ErrorComponent } from './error/error.component'
 import { GlobalErrorHandler } from './global-error-handler.service';
 import { AppRoutingModule } from './app-routing.module';
+import { NewsComponent } from './components/news/news.component'
 
 @NgModule({
   imports: [
@@ -36,7 +37,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   declarations: [
     LoginFormComponent,
-    //Lol2Component,
+    NewsComponent,
     ErrorComponent
     
   ]
