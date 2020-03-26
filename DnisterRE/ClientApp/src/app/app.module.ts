@@ -15,7 +15,8 @@ import {
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LoginFormComponent } from './login-form/login-form.component'
-import { from } from 'rxjs'
+import { from } from 'rxjs';
+import { NewsComponent } from './components/news/news.component'
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { from } from 'rxjs'
   ],
   declarations: [
     LoginFormComponent,
+    NewsComponent,
   ]
 }) export class MaterialModule { };
 
