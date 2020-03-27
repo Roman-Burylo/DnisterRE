@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -16,6 +16,10 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LoginFormComponent } from './login-form/login-form.component'
 import { from } from 'rxjs';
+
+import { ErrorComponent } from './error/error.component'
+import { GlobalErrorHandler } from './global-error-handler.service';
+import { AppRoutingModule } from './app-routing.module';
 import { NewsComponent } from './components/news/news.component'
 
 @NgModule({
@@ -23,6 +27,8 @@ import { NewsComponent } from './components/news/news.component'
     MatFormField,
     MatInput,
     MatLabel,
+    AppRoutingModule
+    
   ],
   exports: [
     MatFormField,
@@ -32,6 +38,8 @@ import { NewsComponent } from './components/news/news.component'
   declarations: [
     LoginFormComponent,
     NewsComponent,
+    ErrorComponent
+    
   ]
 }) export class MaterialModule { };
 
@@ -39,6 +47,7 @@ import { NewsComponent } from './components/news/news.component'
   declarations: [
     AppComponent,
     LoginFormComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,11 +57,14 @@ import { NewsComponent } from './components/news/news.component'
     MatButtonModule,
     BrowserAnimationsModule,
     MatBottomSheetModule,
+    AppRoutingModule
     // MatFormField,
     // MatInput,
     // MatLabel,
   ],
-  providers: [],
+  providers: [
+    {provide: ErrorHandler, useClass: GlobalErrorHandler}
+  ],
   entryComponents: [LoginFormComponent],
   bootstrap: [AppComponent],
   schemas: [
@@ -60,4 +72,3 @@ import { NewsComponent } from './components/news/news.component'
   ],
 })
 export class AppModule { }
-

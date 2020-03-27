@@ -1,0 +1,14 @@
+h2{
+    color: solid salmon;
+}
+
+div.errorCSS 
+{
+        font-size: medium;
+        font-family:  Roboto, "Helvetica Neue", sans-serif;
+        margin-top: 3%;
+        margin-left: 40%;
+        margin-right: -40%;
+        width: 20em;
+        background-color: white;      
+ }
