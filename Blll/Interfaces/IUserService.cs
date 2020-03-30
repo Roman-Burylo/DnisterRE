@@ -14,7 +14,7 @@ namespace Bll.Interfaces
 
         Task Update(UserDetailsDto user, Guid id);
 
-        Task<UsersListDto> GetAllUsers(PaginationParams pagination);
+        Task<UsersListDto> GetAllUsers();
 
         Task<bool> ChangeRole(Guid userId, Guid newRole);
 

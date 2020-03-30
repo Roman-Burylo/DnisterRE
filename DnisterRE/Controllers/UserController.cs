@@ -1,10 +1,10 @@
-﻿using Bll.Interfaces;
-using DAL.Entities;
-using DAL.Repository;
-using DAL.UnitOfWork;
+﻿using AutoMapper;
+using Bll.DTO;
+using Bll.Interfaces;
+using DnisterRE.DTO.UsersDto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DnisterRE.Controllers
@@ -14,9 +14,9 @@ namespace DnisterRE.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IAuthenticateService _authenticateService;
+        private readonly IAuthenticationService _authenticateService;
 
-        public UserController(IUserService userService, IAuthenticateService authenticateService)
+        public UserController(IUserService userService, IAuthenticationService authenticateService)
         {
             _userService = userService;
             _authenticateService = authenticateService;
@@ -44,22 +44,22 @@ namespace DnisterRE.Controllers
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> UpdateUserDetails([FromForm] UserDetailsViewModel userUpdate)
+        public async Task<IActionResult> UpdateUserDetails([FromForm] UserDetailsDto userUpdate)
         {
             var authUser = await _authenticateService.GetAuthUser();
             if (authUser == null) return BadRequest();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDetailsViewModel, UserDetailsDto>())
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDetailsDto, UserDetailsDto>())
                 .CreateMapper();
-            var user = mapper.Map<UserDetailsViewModel, UserDetailsDto>(userUpdate);
+            var user = mapper.Map<UserDetailsDto, UserDetailsDto>(userUpdate);
             await _userService.Update(user, authUser.Id);
             return Ok();
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllUsers([FromQuery] PaginationParams paginationParams)
+        public async Task<IActionResult> GetAllUsers()
         {
-            return Ok(await _userService.GetAllUsers(paginationParams));
+            return Ok(await _userService.GetAllUsers());
         }
 
         [HttpPost("{id}/role")]

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Bll.Services
 {
-    class UserService : IUserService
+    public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IGenericRepository<User> _userRepository;
@@ -69,9 +69,9 @@ namespace Bll.Services
             }
         }
 
-        public async Task<UsersListDto> GetAllUsers(PaginationParams pagination)
+        public async Task<UsersListDto> GetAllUsers()
         {
-            var users = await _userDetailsRepository.GetAll().Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize).ToListAsync();
+            var users = await _userDetailsRepository.GetAll().ToListAsync();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDetails, UsersDto>()).CreateMapper();
             var usersDto = mapper.Map<IEnumerable<UserDetails>, IEnumerable<UsersDto>>(users);
             var usersList = new UsersListDto()

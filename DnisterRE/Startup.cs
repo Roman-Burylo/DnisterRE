@@ -1,7 +1,11 @@
+using Bll.Interfaces;
+using Bll.Services;
+using Common;
 using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +37,13 @@ namespace DnisterRE
             services.AddDbContext<DnisterDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUnitOfWork, UnitOfWork>(provider =>
                new UnitOfWork(provider.GetRequiredService<DnisterDbContext>()));
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IUserManagmentService, UserManagementService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IConfirmationService, ConfirmationService>();
+            services.AddAuthentication(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.Configure<EmailSettings>(Configuration.GetSection("email_settings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
