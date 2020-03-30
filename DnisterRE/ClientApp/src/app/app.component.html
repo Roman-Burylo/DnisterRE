@@ -1,20 +1,22 @@
 <mat-toolbar color="primary">
 
+  <button class="toolbar-button" [routerLink]="['/']" mat-button>Дністер</button>
+
   <button class="toolbar-button" mat-button>Новини</button>
 
   <button class="toolbar-button" mat-button>Нотатки</button>
 
-  <button class="toolbar-button" mat-button>Організації</button>
+  <button class="toolbar-button" [routerLink]="['/api/users']" mat-button>Організація</button>
 
   <button class="toolbar-button" mat-button>Місцевості</button>
 
   <span class="toolbar"></span>
   <button mat-raised-button (click)="openLoginDialog()" class="toolbar-login-button" mat-button>button</button>
-  <!--  -->
 </mat-toolbar>
 
 <div class="conteiner">
-  <div class="card">
-    <router-outlet></router-outlet> 
+  <div>
+    <router-outlet></router-outlet>
   </div>
 </div>
+

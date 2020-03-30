@@ -1,16 +1,11 @@
 <body>
-    <div class="errorCSS" >  
-        <h2>
-            Виник збій!
-            <br>
-            <br>
-            Можливо Ви ввели невірні данні
-            <br>
-            або ж такої сторінки не існує. 
-            <br>
-            <br>
-            <button [routerLink]="['/']" mat-raised-button (click)="returnToHomePage" class="toolbar-login-button" mat-button>Повернення на головну сторінку</button>
-            <br>
-        </h2>
+    <div id="notfound">
+        <div class="notfound">
+            <div class="notfound-404">
+                <h1>Oops!</h1>
+                <h2>404 - The Page can't be found</h2>
+            </div>
+            <a [routerLink]="['/']">Go TO Homepage</a>
+        </div>
     </div>
 </body>
