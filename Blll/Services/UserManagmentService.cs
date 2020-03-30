@@ -1,6 +1,11 @@
-﻿using Bll.Interfaces;
+﻿using AutoMapper;
+using Bll.DTO;
+using Bll.Interfaces;
+using Common.Helpers.PasswordHelper;
 using DAL.Entities;
+using DAL.Repository;
 using DAL.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +19,10 @@ namespace Bll.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileService _fileService;
         private readonly IConfirmationService _confirmation;
+        private readonly IGenericRepository<UserDetails> _userDetailsRepository;
+        private readonly IGenericRepository<User> _userRepository;
+        private readonly IGenericRepository<Role> _roleRepository;
+        private readonly IGenericRepository<UserConfirmation> _userConfirmationRepository;
 
         public UserManagementService(IUnitOfWork unitOfWork, IFileService fileService,
             IConfirmationService confirmation)
@@ -21,11 +30,13 @@ namespace Bll.Services
             _unitOfWork = unitOfWork;
             _fileService = fileService;
             _confirmation = confirmation;
+            _userDetailsRepository = _unitOfWork.GetRepository<UserDetails>();
+            _userRepository = _unitOfWork.GetRepository<User>();
         }
 
         public async Task<User> GetUser(string email, string password)
         {
-            var user = await _unitOfWork.Repository<User>().GetAll().Include(x => x.Role)
+            var user = await _userRepository.GetAll().Include(x => x.Role)
                 .FirstOrDefaultAsync(u => u.Email == email);
             if (PasswordHasher.VerifyHashedPassword(user.PasswordHash, password))
             {
@@ -37,7 +48,7 @@ namespace Bll.Services
 
         public async Task<User> GetUserById(Guid id)
         {
-            var user = await _unitOfWork.Repository<User>().Get(u => u.Id == id);
+            var user = await _userRepository.Get(u => u.Id == id);
             return user;
         }
 
@@ -63,7 +74,7 @@ namespace Bll.Services
                     }
 
                     var user = mapper.Map<UserAllDto, User>(newUser);
-                    user.RoleId = (await _unitOfWork.Repository<Role>().Get(r => r.Name == "Unconfirmed")).Id;
+                    user.RoleId = (await _roleRepository.Get(r => r.Name == "Unconfirmed")).Id;
                     user.PasswordHash = PasswordHasher.HashPassword(newUser.Password);
                     user.Details = userDetails;
                     Random rand = new Random();
@@ -77,9 +88,9 @@ namespace Bll.Services
 
                     user.Confirmation = confUser;
 
-                    _unitOfWork.Repository<UserDetails>().Add(userDetails);
-                    _unitOfWork.Repository<User>().Add(user);
-                    _unitOfWork.Repository<UserConfirmation>().Add(confUser);
+                    _userDetailsRepository.Add(userDetails);
+                    _userRepository.Add(user);
+                    _userConfirmationRepository.Add(confUser);
 
                     await _unitOfWork.SaveChangesAsync();
                     await _confirmation.SendEmail(confUser.Number.ToString(), user.Email, "welcome.html");
@@ -94,8 +105,8 @@ namespace Bll.Services
 
         public async Task PasswordConfirmationRequest(string email)
         {
-            var user = await _unitOfWork.Repository<User>().Get(u => u.Email == email);
-            var conf = await _unitOfWork.Repository<UserConfirmation>().Get(u => u.Id == user.Id);
+            var user = await _userRepository.Get(u => u.Email == email);
+            var conf = await _userConfirmationRepository.Get(u => u.Id == user.Id);
             Random rand = new Random();
             int random = rand.Next(10000000, 100000000);
             conf.Number = random;
