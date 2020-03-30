@@ -1,129 +1,107 @@
-﻿//using DAL.Entities;
-//using DAL.Repository;
-//using DAL.UnitOfWork;
-//using Microsoft.AspNetCore.Mvc;
-//using System;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using Bll.Interfaces;
+using DAL.Entities;
+using DAL.Repository;
+using DAL.UnitOfWork;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
-//namespace DnisterRE.Controllers
-//{
-//    [ApiController]
-//    [Route("api/users")]
-//    public class UserController : ControllerBase
-//    {
-//        private readonly IGenericRepository<User> _userRepository;
+namespace DnisterRE.Controllers
+{
+    [Route("api/user")]
+    [ApiController]
+    public class UserController : ControllerBase
+    {
+        private readonly IUserService _userService;
+        private readonly IAuthenticateService _authenticateService;
 
-//        private readonly IUnitOfWork _unitOfWork;        
+        public UserController(IUserService userService, IAuthenticateService authenticateService)
+        {
+            _userService = userService;
+            _authenticateService = authenticateService;
+        }
 
-//        public UserController(IUnitOfWork unitOfWork)
-//        {
-//            _unitOfWork = unitOfWork;
-//            _userRepository = unitOfWork.GetRepository<User>();
-//        }
+        [HttpGet]
+        [Route("me")]
+        [Authorize]
+        public async Task<IActionResult> GetMyProfile()
+        {
+            var authUser = await _authenticateService.GetAuthUser();
+            if (authUser == null) return BadRequest();
+            var user = await _userService.GetMyProfile(authUser.Id);
+            return Ok(user);
+        }
 
-//        [HttpGet]
-//        public IQueryable GetAll()
-//        {
-//            return _userRepository.GetAll();
-//        }
+        [HttpGet]
+        [Route("{Id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetUser(Guid id)
+        {
+            var user = await _userService.GetUserDetailsById(id);
+            return Ok(user);
+        }
 
-//        [HttpGet("{id}")]
-//        public async Task<IActionResult> GetById(Guid id)
-//        {
-//            if (id == default)
-//            {
-//                throw new ArgumentException($"{nameof(id)} can't be 0");
-//            }
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> UpdateUserDetails([FromForm] UserDetailsViewModel userUpdate)
+        {
+            var authUser = await _authenticateService.GetAuthUser();
+            if (authUser == null) return BadRequest();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDetailsViewModel, UserDetailsDto>())
+                .CreateMapper();
+            var user = mapper.Map<UserDetailsViewModel, UserDetailsDto>(userUpdate);
+            await _userService.Update(user, authUser.Id);
+            return Ok();
+        }
 
-//            try
-//            {
-//                var user = await _userRepository.Get(x => x.Id == id);
-//                return Ok(user);
-//            }
-//            catch (Exception ex)
-//            {
-//                ex.Data["id"] = id;
-//                throw;
-//            }
-//        }
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllUsers([FromQuery] PaginationParams paginationParams)
+        {
+            return Ok(await _userService.GetAllUsers(paginationParams));
+        }
 
-//        [HttpPost("create")]
-//        public async Task<IActionResult> CreateAsync([FromBody]User user)
-//        {
-//            if (user == null)
-//            {
-//                throw new ArgumentException($"{nameof(user)} can't be null");
-//            }            
+        [HttpPost("{id}/role")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ChangeRole(Guid id, [FromBody] ChangeRoleViewModel newRole)
+        {
+            var authUser = await _authenticateService.GetAuthUser();
+            if (authUser == null) return BadRequest();
+            if (await _userService.ChangeRole(id, newRole.NewRoleId)) return Ok();
+            return BadRequest();
+        }
 
-//            try
-//            {
-//                _userRepository.Add(user);
-//                await _unitOfWork.SaveChangesAsync();
-//                return Ok(user);
-//            }
-//            catch
-//            {
-//                throw new Exception($"Error while adding user nameof {nameof(user)}");
-//            }
-//        }
 
-//        [HttpPut("update/{id}")]
-//        public async Task<IActionResult> UpdateById(Guid id, [FromBody]User user)
-//        {
-//            if (id == default)
-//            {
-//                throw new ArgumentException($"{nameof(id)} cannot be 0");
-//            }        
+        [HttpGet]
+        [Route("admin/{Id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAdminUserView(Guid Id)
+        {
+            var authUser = await _authenticateService.GetAuthUser();
+            if (authUser == null) return BadRequest();
+            var user = await _userService.AdminUserView(Id);
+            if (user == null) return BadRequest();
+            return Ok(user);
+        }
 
-//            try
-//            {
-//                var currentUser = await _userRepository.Get(x => x.Id == id);
+        [HttpGet("roles")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roles = await _userService.GetAllRols();
+            return Ok(roles);
+        }
 
-//                if (currentUser == null)
-//                {
-//                    throw new NullReferenceException($"Error while updating user. User with {nameof(id)}={id} not found");
-//                }
-//                //mapper
-//                //currentUser.Name = user.Name;
-//                //currentUser.PhoneNumber = user.Name;                
-//                //currentUser.Email = user.Email;                
-//                //currentUser.PhoneNumber = user.PhoneNumber;                
-//                //currentUser.RoleId = user.RoleId;
-
-//                _userRepository.Update(currentUser);
-//                await _unitOfWork.SaveChangesAsync();
-
-//                return Ok(currentUser);
-//            }
-//            catch (Exception ex)
-//            {
-//                ex.Data["id"] = id;
-//                throw;
-//            }
-//        }
-
-//        [HttpDelete("remove/{id}")]
-//        public async Task<IActionResult> RemoveById(Guid id)
-//        {
-//            if (id == default)
-//            {
-//                throw new ArgumentException($"{nameof(id)} cannot be 0");
-//            }
-
-//            try
-//            {
-//                var user = await _userRepository.Get(x => x.Id == id);
-//                _userRepository.Remove(user);
-//                await _unitOfWork.SaveChangesAsync();
-//            }
-//            catch (Exception ex)
-//            {
-//                ex.Data["id"] = id;
-//                throw;
-//            }
-
-//            return Ok();
-//        }
-//    }
-//}
+        [HttpGet("{id}/role")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUserRole(Guid id)
+        {
+            var userRole = await _userService.GetUserRole(id);
+            return Ok(new UserRoleViewModel()
+            {
+                Id = userRole,
+            });
+        }
+    }
+}
