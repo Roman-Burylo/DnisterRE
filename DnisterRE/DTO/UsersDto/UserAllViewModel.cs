@@ -21,7 +21,6 @@ namespace DnisterRE.DTO.UsersDto
         [Required]
         public string LastName { get; set; }
 
-
         public IFormFile Image { get; set; }
 
         public DateTime? BirthDay { get; set; }

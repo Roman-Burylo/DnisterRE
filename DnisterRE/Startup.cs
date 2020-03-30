@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TheraLang.BLL.Services.FileServices;
 
 namespace DnisterRE
 {
@@ -43,6 +44,7 @@ namespace DnisterRE
             services.AddScoped<IConfirmationService, ConfirmationService>();
             services.AddAuthentication(Configuration.GetConnectionString("DefaultConnection"));
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IFileService, LocalFileService>();
             services.Configure<EmailSettings>(Configuration.GetSection("email_settings"));
         }
 
@@ -68,7 +70,7 @@ namespace DnisterRE
             }
 
             app.UseRouting();
-
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
