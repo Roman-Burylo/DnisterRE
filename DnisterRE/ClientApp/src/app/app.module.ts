@@ -19,7 +19,12 @@ import { MatDialogModule } from '@angular/material';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LoginFormComponent } from './login-form/login-form.component'
-import { from } from 'rxjs'
+import { from } from 'rxjs';
+
+import { ErrorComponent } from './error/error.component'
+import { GlobalErrorHandler } from './global-error-handler.service';
+import { AppRoutingModule } from './app-routing.module';
+import { NewsComponent } from './components/news/news.component'
 
 import { ErrorComponent } from './error/error.component'
 import { GlobalErrorHandler } from './global-error-handler.service';
@@ -89,4 +94,3 @@ import { AdduserFormComponent } from './adduser-form/adduser-form.component';
   ],
 })
 export class AppModule { }
-

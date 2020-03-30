@@ -1,7 +1,3 @@
-
-# Created by https://www.gitignore.io/api/angular,visualstudio
-# Edit at https://www.gitignore.io/?templates=angular,visualstudio
-
 ### Angular ###
 ## Angular ##
 # compiled output
@@ -381,6 +377,5 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
-#DbConnection
-apsettings.json
-# End of https://www.gitignore.io/api/angular,visualstudio
+#Telerik's JustMock configuration file
+appsettings.json
